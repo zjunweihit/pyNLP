@@ -2,8 +2,7 @@ from keras.datasets import imdb
 from keras import preprocessing
 from keras.models import Sequential
 from keras.layers import Flatten, Dense, Embedding
-import matplotlib.pyplot as plt
-import numpy as np
+from pynlp.plot.historyplot import HistoryPlot
 
 max_features = 10000
 # max input length
@@ -30,14 +29,5 @@ H = model.fit(x_train, y_train,
               batch_size=32,
               validation_split=0.2)
 
-plt.style.use('ggplot')
-plt.figure()
-plt.plot(np.arange(0, N_epochs,), H.history["loss"], label="train_loss")
-plt.plot(np.arange(0, N_epochs,), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, N_epochs,), H.history["acc"], label="train_acc")
-plt.plot(np.arange(0, N_epochs,), H.history["val_acc"], label="val_acc")
-plt.title("Training Loss and Accuracy")
-plt.xlabel("Epoch #")
-plt.ylabel("Loss/Accuracy")
-plt.legend()
-plt.show()
+hp = HistoryPlot(N_epochs)
+hp.show(H)

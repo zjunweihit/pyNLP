@@ -4,7 +4,7 @@ from keras.preprocessing.sequence import pad_sequences
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Embedding, Flatten, Dense
-import matplotlib.pyplot as plt
+from pynlp.plot.historyplot import HistoryPlot
 
 N_EPOCHS = 10
 ###############################################################
@@ -119,17 +119,8 @@ model.save_weights('pre_trained_glove_model.h5')
 # plot the training results
 ###############################################################
 
-plt.style.use('ggplot')
-plt.figure()
-plt.plot(np.arange(0, N_EPOCHS,), H.history["loss"], label="train_loss")
-plt.plot(np.arange(0, N_EPOCHS,), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, N_EPOCHS,), H.history["acc"], label="train_acc")
-plt.plot(np.arange(0, N_EPOCHS,), H.history["val_acc"], label="val_acc")
-plt.title("Training Loss and Accuracy")
-plt.xlabel("Epoch #")
-plt.ylabel("Loss/Accuracy")
-plt.legend()
-plt.show()
+hp = HistoryPlot(N_EPOCHS)
+hp.show(H)
 
 ###############################################################
 # evaluate the test data
