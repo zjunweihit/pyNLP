@@ -105,19 +105,26 @@ test_data = generator(weather_data,
 valid_steps = 202000 - 200001 - prev
 test_steps = len(weather_data) - 300001 - prev
 
-N_epochs = 2
+N_epochs = 10
 model = Sequential()
 #model.add(layers.Flatten(input_shape=(prev // step, weather_data.shape[-1])))
 #model.add(layers.Dense(32, activation='relu'))
+
 model.add(layers.GRU(32, input_shape=(None, weather_data.shape[-1])))
+
+#model.add(layers.Conv1D(32, 5, activation='relu', input_shape=(None, weather_data.shape[-1])))
+#model.add(layers.MaxPool1D(3))
+#model.add(layers.Conv1D(32, 5, activation='relu'))
+#model.add(layers.GRU(32, dropout=0.1, recurrent_dropout=0.5))
 model.add(layers.Dense(1))
 model.compile(optimizer=RMSprop(), loss='mae')
+model.summary()
 
 # FIXME: cannot finish the training soon.
 #        validation data is too much to train in a loop soon.
 #        We can skip validation data without acc data in history.
 H = model.fit_generator(train_data,
-                        steps_per_epoch=500,
+                        steps_per_epoch=100,
                         epochs=N_epochs,
                         validation_data=valid_data,
                         validation_steps=valid_steps)
@@ -127,7 +134,7 @@ H = model.fit_generator(train_data,
 plt.style.use('ggplot')
 plt.figure()
 plt.plot(np.arange(0, N_epochs), H.history["loss"], label="train_loss")
-#plt.plot(np.arange(0, N_epochs), H.history["val_loss"], label="val_loss")
+plt.plot(np.arange(0, N_epochs), H.history["val_loss"], label="val_loss")
 #plt.plot(np.arange(0, N_epochs), H.history["acc"], label="train_acc")
 #plt.plot(np.arange(0, N_epochs), H.history["val_acc"], label="val_acc")
 plt.title("Training Loss and Accuracy")
