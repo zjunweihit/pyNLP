@@ -21,7 +21,7 @@ model.add(layers.Embedding(max_features, 128, input_length=max_len))
 model.add(layers.Conv1D(32, 7, activation='relu'))
 model.add(layers.MaxPool1D(5))
 model.add(layers.Conv1D(32, 7, activation='relu'))
-model.add(layers.GlobalMaxPooling1D())
+model.add(layers.GlobalMaxPooling1D()) # output (None, 32)
 model.add(layers.Dense(1))
 model.summary()
 
