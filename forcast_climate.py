@@ -89,7 +89,7 @@ valid_data = generator(weather_data,
                        prev=prev,
                        next=next,
                        min_index=200001,
-                       max_index=210000,
+                       max_index=202000,
                        step=step,
                        batch_size=batch_size)
 
@@ -102,7 +102,7 @@ test_data = generator(weather_data,
                       batch_size=batch_size)
 
 # how many steps to draw from entire validation data, not including the last one( since 300000 - 200001 )
-valid_steps = 210000 - 200001 - prev
+valid_steps = 202000 - 200001 - prev
 test_steps = len(weather_data) - 300001 - prev
 
 N_epochs = 2
